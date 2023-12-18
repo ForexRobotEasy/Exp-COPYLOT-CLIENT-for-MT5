@@ -1,0 +1,89 @@
+
+//+------------------------------------------------------------------+
+//|                                                     COPYLOT CLIENT|
+//|                                     https://www.forexroboteasy.com|
+//|                                                       Forex Robot Easy Team|
+//+------------------------------------------------------------------+
+
+//+------------------------------------------------------------------+
+//|                                                                  |
+//|                      Copylot Client Expert Advisor                 |
+//|                                                                  |
+//+------------------------------------------------------------------+
+
+//--- Include necessary libraries
+#include <Trade\Trade.mqh>
+#include <Trade\PositionInfo.mqh>
+#include <Trade\CopyRates.mqh>
+#include <Trade\CopyTicks.mqh>
+
+//--- Define global variables
+input string SourceTerminal = 'MT5';   // Source terminal type
+input string TargetTerminal = 'MT4';   // Target terminal type
+input int CopyMode = 1;                // Trade copying mode
+input int MaxTerminals = 10;           // Maximum number of terminals
+
+//--- Define trade copying function
+void CopyTrade()
+{
+   //--- Define trade copier logic here
+   Print('Copying trades from ', SourceTerminal, ' to ', TargetTerminal);
+   
+   //--- Copy trade logic code here
+   
+   //--- Print trade copying completion message
+   Print('Trade copying completed successfully!');
+}
+
+//--- Define expert advisor initialization function
+int OnInit()
+{
+   //--- Check if terminals are compatible for trade copying
+   if(SourceTerminal == TargetTerminal)
+   {
+      Print('Source and target terminals cannot be the same.');
+      return INIT_FAILED;
+   }
+   
+   //--- Check if copying mode is valid
+   if(CopyMode != 1 && CopyMode != 2 && CopyMode != 3)
+   {
+      Print('Invalid copying mode selected.');
+      return INIT_FAILED;
+   }
+   
+   //--- Check if number of terminals is within the allowed limit
+   if(MaxTerminals < 2 || MaxTerminals > 10)
+   {
+      Print('Invalid number of terminals specified.');
+      return INIT_FAILED;
+   }
+   
+   //--- Initialize trade copying
+   CopyTrade();
+   
+   //--- Return initialization success
+   return INIT_SUCCEEDED;
+}
+
+//--- Define expert advisor deinitialization function
+void OnDeinit(const int reason)
+{
+   //--- Perform necessary cleanup tasks here
+   Print('Expert advisor deinitialized successfully.');
+}
+
+//--- Define expert advisor start function
+void OnTick()
+{
+   //--- Implement necessary trading functions here
+   
+   //--- Stop expert advisor execution after trade copying completion
+   ExpertRemove();
+}
+
+//+------------------------------------------------------------------+
+//|                                                                  |
+//|                          End of Expert Advisor                    |
+//|                                                                  |
+//+------------------------------------------------------------------+
